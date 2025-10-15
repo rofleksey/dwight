@@ -1,0 +1,14 @@
+.idea/
+data/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+dwight
+**/node_modules
+scripts
+config.yaml
+.aider*
