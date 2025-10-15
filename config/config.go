@@ -33,10 +33,6 @@ func LoadConfig() (*Config, error) {
 		return nil, fmt.Errorf("error unmarshaling config: %w", err)
 	}
 
-	if config.BaseURL == "" {
-		config.BaseURL = "https://bothub.chat/api/v2/openai/v1"
-	}
-
 	validate := validator.New()
 	if err := validate.Struct(config); err != nil {
 		return nil, fmt.Errorf("config validation failed: %w", err)
