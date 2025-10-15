@@ -1,14 +1,43 @@
-.idea/
-data/
+# Binaries
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
+
+# Test files
+*_test.go
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Go files
 *.test
-*.out
-dwight
-**/node_modules
-scripts
-config.yaml
-.aider*
+*.prof
+*.pprof
+
+# Build artifacts
+build/
+dist/
+
+# Documentation
+*.md
+*.rst
+
+# Configuration files that might contain secrets
+.env
+.env.local
+.env.production
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+LICENSE

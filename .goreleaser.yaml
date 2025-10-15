@@ -1,0 +1,70 @@
+# Goreleaser configuration
+project_name: dwight
+
+builds:
+  - main: .
+    id: dwight
+    binary: dwight
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X go.szostok.io/version.version={{.Version}}
+      - -X go.szostok.io/version.buildDate={{.Date}}
+      - -X go.szostok.io/version.commit={{.Commit}}
+      - -X go.szostok.io/version.commitDate={{.CommitDate}}
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - id: dwight
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    name_template: >-
+      {{- .ProjectName }}_
+      {{- .Version }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      - {{- else if eq .Arch "386" }}i386
+      - {{- else }}{{ .Arch }}{{ end }}
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+release:
+  github:
+    owner: rofleksey
+    name: dwight
+
+dockers:
+  - image_templates:
+      - "ghcr.io/rofleksey/dwight:latest"
+    dockerfile: Dockerfile
+    use: buildx
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--build-arg=GIT_TAG={{.Version}}"
+      - "--build-arg=GIT_COMMIT={{.Commit}}"
+      - "--build-arg=GIT_COMMIT_DATE={{.CommitDate}}"
