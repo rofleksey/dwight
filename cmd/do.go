@@ -12,9 +12,8 @@ import (
 )
 
 type DoCmd struct {
-	inputFile string
-	debug     bool
-	yes       bool
+	query string
+	yes   bool
 }
 
 func NewDoCmd() *cobra.Command {
@@ -24,20 +23,13 @@ func NewDoCmd() *cobra.Command {
 		Short: "Execute task",
 		Run:   doCmd.run,
 	}
-	cmd.Flags().StringVarP(&doCmd.inputFile, "input", "i", "", "Task description file")
-	cmd.Flags().BoolVarP(&doCmd.debug, "debug", "d", false, "Enable debug mode")
+	cmd.Flags().StringVarP(&doCmd.query, "query", "q", "", "Task description")
 	cmd.Flags().BoolVarP(&doCmd.yes, "yes", "y", false, "Automatically answer Yes to all confirmations (except ask_question)")
-	cmd.MarkFlagRequired("input")
+	cmd.MarkFlagRequired("query")
 	return cmd
 }
 
 func (d *DoCmd) run(_ *cobra.Command, _ []string) {
-	taskContent, err := os.ReadFile(d.inputFile)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error reading task: %v\n", err)
-		os.Exit(1)
-	}
-
 	cfg, err := config.LoadConfig()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error loading config: %v\n", err)
@@ -50,7 +42,7 @@ func (d *DoCmd) run(_ *cobra.Command, _ []string) {
 	executor := task.NewExecutor(client, cfg)
 
 	fmt.Println("Executing task...")
-	if err := executor.Execute(string(taskContent)); err != nil {
+	if err := executor.Execute(d.query); err != nil {
 		fmt.Fprintf(os.Stderr, "Error executing task: %v\n", err)
 		os.Exit(1)
 	}

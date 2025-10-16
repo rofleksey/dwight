@@ -14,6 +14,7 @@ func main() {
 		Short: "AI-powered work task automation tool",
 	}
 
+	rootCmd.AddCommand(cmd.NewFileCmd())
 	rootCmd.AddCommand(cmd.NewDoCmd())
 	rootCmd.AddCommand(extension.NewVersionCobraCmd(
 		extension.WithUpgradeNotice("rofleksey", "dwight"),

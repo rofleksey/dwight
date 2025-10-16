@@ -168,7 +168,7 @@ func (e *Executor) getTools() []openai.Tool {
 			Type: openai.ToolTypeFunction,
 			Function: &openai.FunctionDefinition{
 				Name:        "run_command",
-				Description: "Execute a shell command",
+				Description: "Execute a shell command (sh -c <your_command>)",
 				Parameters: map[string]interface{}{
 					"type": "object",
 					"properties": map[string]interface{}{
