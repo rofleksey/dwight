@@ -9,9 +9,10 @@ import (
 )
 
 type Config struct {
-	BaseURL string `yaml:"base_url" validate:"required"`
-	Token   string `yaml:"token" validate:"required"`
-	Model   string `yaml:"model" validate:"required"`
+	BaseURL         string `mapstructure:"base_url" validate:"required"`
+	Token           string `mapstructure:"token" validate:"required"`
+	Model           string `mapstructure:"model" validate:"required"`
+	SnippetMaxLines int    `mapstructure:"snippet_max_lines" validate:"required,min=1"`
 }
 
 func LoadConfig() (*Config, error) {
@@ -23,6 +24,8 @@ func LoadConfig() (*Config, error) {
 	viper.SetConfigName(".dwight.conf")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(home)
+
+	viper.SetDefault("snippet_max_lines", 50)
 
 	if err := viper.ReadInConfig(); err != nil {
 		return nil, fmt.Errorf("error reading config: %w", err)

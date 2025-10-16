@@ -47,7 +47,7 @@ func (d *DoCmd) run(_ *cobra.Command, _ []string) {
 	util.SetAutoConfirm(d.yes)
 
 	client := api.NewOpenAIClient(cfg)
-	executor := task.NewExecutor(client, cfg, d.debug)
+	executor := task.NewExecutor(client, cfg)
 
 	fmt.Println("Executing task...")
 	if err := executor.Execute(string(taskContent)); err != nil {

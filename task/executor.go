@@ -15,13 +15,13 @@ import (
 
 type Executor struct {
 	client *api.OpenAIClient
-	config *config.Config
+	cfg    *config.Config
 }
 
-func NewExecutor(client *api.OpenAIClient, config *config.Config, debug bool) *Executor {
+func NewExecutor(client *api.OpenAIClient, cfg *config.Config) *Executor {
 	return &Executor{
 		client: client,
-		config: config,
+		cfg:    cfg,
 	}
 }
 
@@ -74,7 +74,7 @@ func (e *Executor) createChatCompletion(messages []openai.ChatCompletionMessage,
 
 	go func() {
 		response, err = e.client.CreateChatCompletion(context.Background(), openai.ChatCompletionRequest{
-			Model:    e.config.Model,
+			Model:    e.cfg.Model,
 			Messages: messages,
 			Tools:    tools,
 		})
