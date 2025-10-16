@@ -16,7 +16,6 @@ func main() {
 
 	rootCmd.AddCommand(cmd.NewFileCmd())
 	rootCmd.AddCommand(cmd.NewDoCmd())
-	rootCmd.AddCommand(cmd.NewReviewCommand())
 	rootCmd.AddCommand(extension.NewVersionCobraCmd(
 		extension.WithUpgradeNotice("rofleksey", "dwight"),
 	))
