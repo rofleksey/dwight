@@ -13,6 +13,8 @@ type Config struct {
 	Token           string `mapstructure:"token" validate:"required"`
 	Model           string `mapstructure:"model" validate:"required"`
 	SnippetMaxLines int    `mapstructure:"snippet_max_lines" validate:"required,min=1"`
+	BitbucketHost   string `mapstructure:"bitbucket_host"`
+	BitbucketToken  string `mapstructure:"bitbucket_token"`
 }
 
 func LoadConfig() (*Config, error) {
