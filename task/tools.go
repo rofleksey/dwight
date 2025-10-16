@@ -3,8 +3,6 @@ package task
 import (
 	"bufio"
 	"bytes"
-	"dwight/util"
-	"dwight/util/ignore"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,6 +12,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/rofleksey/dwight/util"
+	"github.com/rofleksey/dwight/util/ignore"
 	"github.com/sashabaranov/go-openai"
 )
 

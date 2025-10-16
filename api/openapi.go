@@ -2,8 +2,8 @@ package api
 
 import (
 	"context"
-	"dwight/config"
 
+	"github.com/rofleksey/dwight/config"
 	"github.com/sashabaranov/go-openai"
 )
 

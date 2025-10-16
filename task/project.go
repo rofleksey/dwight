@@ -1,12 +1,13 @@
 package task
 
 import (
-	"dwight/util"
-	"dwight/util/ignore"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/rofleksey/dwight/util"
+	"github.com/rofleksey/dwight/util/ignore"
 )
 
 func (e *Executor) getProjectStructure() (string, error) {

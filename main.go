@@ -1,9 +1,9 @@
 package main
 
 import (
-	"dwight/cmd"
 	"os"
 
+	"github.com/rofleksey/dwight/cmd"
 	"github.com/spf13/cobra"
 	"go.szostok.io/version/extension"
 )

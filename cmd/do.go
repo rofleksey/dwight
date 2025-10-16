@@ -1,13 +1,13 @@
 package cmd
 
 import (
-	"dwight/api"
-	"dwight/config"
-	"dwight/task"
-	"dwight/util"
 	"fmt"
 	"os"
 
+	"github.com/rofleksey/dwight/api"
+	"github.com/rofleksey/dwight/config"
+	"github.com/rofleksey/dwight/task"
+	"github.com/rofleksey/dwight/util"
 	"github.com/spf13/cobra"
 )
 

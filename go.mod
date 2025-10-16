@@ -1,4 +1,4 @@
-module dwight
+module github.com/rofleksey/dwight
 
 go 1.25
 

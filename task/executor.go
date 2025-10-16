@@ -2,9 +2,6 @@ package task
 
 import (
 	"context"
-	"dwight/api"
-	"dwight/config"
-	"dwight/prompts"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -12,6 +9,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/rofleksey/dwight/api"
+	"github.com/rofleksey/dwight/config"
+	"github.com/rofleksey/dwight/prompts"
 	"github.com/sashabaranov/go-openai"
 )
 

@@ -2,12 +2,13 @@ package task
 
 import (
 	"context"
-	"dwight/config"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"strings"
+
+	"github.com/rofleksey/dwight/config"
 )
 
 type BitbucketClient struct {

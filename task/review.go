@@ -2,11 +2,11 @@ package task
 
 import (
 	"context"
-	"dwight/config"
 	"fmt"
 	"strings"
 
 	"github.com/go-git/go-git/v5"
+	"github.com/rofleksey/dwight/config"
 )
 
 type BitbucketPR struct {
