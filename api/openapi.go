@@ -21,7 +21,3 @@ func NewOpenAIClient(config *config.Config) *OpenAIClient {
 func (o *OpenAIClient) CreateChatCompletion(ctx context.Context, req openai.ChatCompletionRequest) (openai.ChatCompletionResponse, error) {
 	return o.client.CreateChatCompletion(ctx, req)
 }
-
-func (o *OpenAIClient) CreateChatCompletionStream(ctx context.Context, req openai.ChatCompletionRequest) (*openai.ChatCompletionStream, error) {
-	return o.client.CreateChatCompletionStream(ctx, req)
-}

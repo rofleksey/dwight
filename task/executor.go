@@ -5,8 +5,10 @@ import (
 	"dwight/api"
 	"dwight/config"
 	"dwight/prompts"
+	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -48,6 +50,10 @@ func (e *Executor) Execute(task string) error {
 		choice := fullResponse.Choices[0]
 		messages = append(messages, choice.Message)
 
+		if err := e.logAIInteraction(messages, tools, fullResponse); err != nil {
+			fmt.Fprintf(os.Stderr, "Error logging AI interaction: %v\n", err)
+		}
+
 		if len(choice.Message.ToolCalls) == 0 {
 			if e.isTaskComplete(choice.Message.Content) {
 				fmt.Println("Task completed!")
@@ -62,6 +68,41 @@ func (e *Executor) Execute(task string) error {
 			fmt.Println("Task completed!")
 			break
 		}
+	}
+
+	return nil
+}
+
+func (e *Executor) logAIInteraction(messages []openai.ChatCompletionMessage, tools []openai.Tool, response openai.ChatCompletionResponse) error {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+
+	logPath := filepath.Join(home, ".dwight.ai.log")
+	file, err := os.OpenFile(logPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	logEntry := map[string]interface{}{
+		"timestamp": time.Now().Format(time.RFC3339),
+		"request": map[string]interface{}{
+			"messages": messages,
+			"tools":    tools,
+		},
+		"response": response,
+	}
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(logEntry); err != nil {
+		return err
+	}
+
+	if _, err := file.WriteString("\n"); err != nil {
+		return err
 	}
 
 	return nil
