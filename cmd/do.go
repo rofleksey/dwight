@@ -31,7 +31,7 @@ func NewDoCmd() *cobra.Command {
 	return cmd
 }
 
-func (d *DoCmd) run(cmd *cobra.Command, args []string) {
+func (d *DoCmd) run(_ *cobra.Command, _ []string) {
 	taskContent, err := os.ReadFile(d.inputFile)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error reading task: %v\n", err)
@@ -44,7 +44,6 @@ func (d *DoCmd) run(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	// Apply global auto-confirm behavior
 	util.SetAutoConfirm(d.yes)
 
 	client := api.NewOpenAIClient(cfg)

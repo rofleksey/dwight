@@ -16,14 +16,12 @@ import (
 type Executor struct {
 	client *api.OpenAIClient
 	config *config.Config
-	debug  bool
 }
 
 func NewExecutor(client *api.OpenAIClient, config *config.Config, debug bool) *Executor {
 	return &Executor{
 		client: client,
 		config: config,
-		debug:  debug,
 	}
 }
 
@@ -37,10 +35,6 @@ func (e *Executor) Execute(task string) error {
 	messages := e.createInitialMessages(structure, task)
 
 	for {
-		if e.debug {
-			e.printDebugInfo(messages, tools)
-		}
-
 		startTime := time.Now()
 		fullResponse, err := e.createChatCompletion(messages, tools, startTime)
 		if err != nil {
@@ -59,7 +53,9 @@ func (e *Executor) Execute(task string) error {
 				fmt.Println("Task completed!")
 				break
 			}
-			continue
+
+			fmt.Println("Empty response from AI, exiting...")
+			break
 		}
 
 		if e.handleToolCalls(choice.Message.ToolCalls, &messages) {
